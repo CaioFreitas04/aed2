@@ -1,0 +1,2 @@
+- Implementar as funções da árvore AVL.
+- Todo o resto do trabalho.
