@@ -27,8 +27,12 @@ int insert_node(word_t input, tree *t);
 //end;
 
 //funções para árvore AVL;
+//begin;
+void rotate_left(tree *t);
+void rotate_right(tree *t);
+void rotate(int rot, tree *t);
+int factor(tree *t);
 int insert_node_avl(word_t input, tree *t);
-
-//TODO: definir rotações da árvore AVL;
+//end;
 
 #endif
