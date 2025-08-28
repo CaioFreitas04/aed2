@@ -3,24 +3,26 @@
 #include "data_def.h"
 #include "binary_search.h"
 #include "binary_tree.h"
+#include "song_parser.h"
 
 int main() {
-	tree *t   = initialise_tree();
-	tree *avl = initialise_tree();
-	word_t input;
-	
-	for(int i = 0; i < 10; i++) {
-		sprintf(input.word, "%d", i);
+	tree *t     = initialise_tree();
+	tree *avl   = initialise_tree();
+	array *warr = initialise_array();
+
+	for(int i = 0; i < 16; i++) {
+		char parser_input[7];
 		
-		insert_node(input, t);
-		insert_node_avl(input, avl);
+		sprintf(parser_input, "%d.txt", i+1);
+		
+		parse_file(parser_input, insert_array, (void*) warr);
+		
+		parse_file(parser_input, insert_node_avl_void, (void*) avl);
 	}
+	word_qsort(warr->arr, 0, warr->size-1);
 	
-	printf("Standard Tree Height: %d.\n", tree_height(t));
-	printf("AVL Tree Height: %d.\n", tree_height(avl));
-	traversal(*t, INFIX);
-	printf("\n");
 	traversal(*avl, INFIX);
+	
 	
 	return 0;
 }
