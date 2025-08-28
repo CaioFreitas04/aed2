@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "binary_tree.h"
 
@@ -6,8 +7,9 @@
 //begin;
 
 tree *initialise_tree() {
-	tree *t = (tree*) malloc(sizeof(node));
+	tree *t = (tree*) malloc(sizeof(tree));
 	*t = NULL;
+	return t;
 }
 
 int is_empty(tree *t) {
@@ -54,6 +56,35 @@ int tree_height(tree *t) {
 	
 	if(lh > rh) return lh + 1;
 	else return rh + 1;
+}
+
+void traversal(tree t, int type) {
+
+	if(t == NULL) return;
+	
+	switch(type) {
+		case PREFIX:
+			printf("%s\n", t->data.word);
+			traversal(t->l, PREFIX);
+			traversal(t->r, PREFIX);
+		break;
+		
+		case INFIX:
+			traversal(t->l, INFIX);
+			printf("%s\n", t->data.word);
+			traversal(t->r, INFIX);
+		break;
+		
+		case POSTFIX:
+			traversal(t->l, POSTFIX);
+			traversal(t->r, POSTFIX);
+			printf("%s\n", t->data.word);
+		break;
+		
+		default:
+			printf("ERR: INVALID_TRAVERSAL_TYPE\n");
+		break;
+	}
 }
 
 //end;
@@ -126,7 +157,7 @@ void rotate(int rot, tree *t) {
 }
 
 int factor(tree *t) {
-    if (*t == NULL) return 0;
+    if(*t == NULL) return 0;
     int lh = tree_height(&(*t)->l);
     int rh = tree_height(&(*t)->r);
     return lh - rh;
@@ -142,30 +173,36 @@ int insert_node_avl(word_t input, tree *t) {
         return 0;
     }
 
-    if(strcmp(input.word, (*t)->data.word) < 0) {
-        insert_node_avl(input, &(*t)->l);
-    } else if(strcmp(input.word, (*t)->data.word) > 0) {
-        insert_node_avl(input, &(*t)->r);
+    int cmp = strcmp(input.word, (*t)->data.word);
+    if(cmp < 0) {
+        int r = insert_node_avl(input, &(*t)->l);
+        if(r < 0) return r;
+    } else if(cmp > 0) {
+        int r = insert_node_avl(input, &(*t)->r);
+        if(r < 0) return r;
     } else {
         return 1;
     }
 
-    (*t)->factor = factor(t);
-	//balanceamento;
-    if((*t)->factor > 1) {
-        if(strcmp(input.word, (*t)->l->data.word) < 0) {
+	(*t)->factor = factor(t);
+
+	if((*t)->factor > 1) {
+        if (!(*t)->l) return 0;
+        if (strcmp(input.word, (*t)->l->data.word) < 0) {
             rotate(LEFT_LEFT, t);
         } else {
             rotate(LEFT_RIGHT, t);
         }
-    }
-    else if((*t)->factor < -1) {
-        if(strcmp(input.word, (*t)->r->data.word) > 0) {
+    } else if ((*t)->factor < -1) {
+        if (!(*t)->r) return 0;
+        if (strcmp(input.word, (*t)->r->data.word) > 0) {
             rotate(RIGHT_RIGHT, t);
         } else {
             rotate(RIGHT_LEFT, t);
         }
     }
+
+    if (*t) (*t)->factor = factor(t);
 
     return 0;
 }

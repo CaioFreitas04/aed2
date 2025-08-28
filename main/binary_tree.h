@@ -14,11 +14,16 @@ typedef struct node {
 	tree r;
 } node;
 
+#define PREFIX 0
+#define INFIX 1
+#define POSTFIX 2
+
 tree *initialise_tree();
 int is_empty(tree *t);
 word_t *word_tsearch(char *key, tree *t);
 int freq_tsearch(char *key, tree *t);
 int tree_height(tree *t);
+void traversal(tree t, int type);
 //end;
 
 //funções para árvore convencional;
