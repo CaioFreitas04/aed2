@@ -193,9 +193,9 @@ int insert_node_avl(word_t input, tree *t) {
         } else {
             rotate(LEFT_RIGHT, t);
         }
-    } else if ((*t)->factor < -1) {
-        if (!(*t)->r) return 0;
-        if (strcmp(input.word, (*t)->r->data.word) > 0) {
+    } else if((*t)->factor < -1) {
+        if(!(*t)->r) return 0;
+        if(strcmp(input.word, (*t)->r->data.word) > 0) {
             rotate(RIGHT_RIGHT, t);
         } else {
             rotate(RIGHT_LEFT, t);
@@ -203,6 +203,56 @@ int insert_node_avl(word_t input, tree *t) {
     }
 
     if (*t) (*t)->factor = factor(t);
+
+    return 0;
+}
+
+int insert_node_avl_freq(word_t input, tree *t) {
+    if(is_empty(t)) {
+        *t = (tree) malloc(sizeof(node));
+        (*t)->data = input;
+        (*t)->l = NULL;
+        (*t)->r = NULL;
+        (*t)->factor = 0;
+        return 0;
+    }
+
+    int cmp = input.freq - (*t)->data.freq;
+    if(cmp == 0) {
+        cmp = strcmp(input.word, (*t)->data.word);
+    }
+
+	//caso de duplicata exata;
+    if(cmp < 0) {
+        int r = insert_node_avl_freq(input, &(*t)->l);
+        if(r < 0) return r;
+    } else if (cmp > 0) {
+        int r = insert_node_avl_freq(input, &(*t)->r);
+        if(r < 0) return r;
+    } else {
+        return 1;
+    }
+
+    (*t)->factor = factor(t);
+
+    if((*t)->factor > 1) {
+		//comparação nojentamente grande;
+        if(input.freq < (*t)->l->data.freq ||
+            (input.freq == (*t)->l->data.freq && strcmp(input.word, (*t)->l->data.word) < 0)) {
+            rotate(LEFT_LEFT, t);
+        } else {
+            rotate(LEFT_RIGHT, t);
+        }
+    } else if((*t)->factor < -1) {
+        if(input.freq > (*t)->r->data.freq ||
+            (input.freq == (*t)->r->data.freq && strcmp(input.word, (*t)->r->data.word) > 0)) {
+            rotate(RIGHT_RIGHT, t);
+        } else {
+            rotate(RIGHT_LEFT, t);
+        }
+    }
+
+    if(*t) (*t)->factor = factor(t);
 
     return 0;
 }

@@ -38,6 +38,7 @@ void rotate_right(tree *t);
 void rotate(int rot, tree *t);
 int factor(tree *t);
 int insert_node_avl(word_t input, tree *t);
+int insert_node_avl_freq(word_t input, tree *t);
 //end;
 
 #endif
