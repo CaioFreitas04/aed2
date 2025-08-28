@@ -64,27 +64,33 @@ void traversal(tree t, int type) {
 	
 	switch(type) {
 		case PREFIX:
-			printf("%s\n", t->data.word);
+			print_node(t);
 			traversal(t->l, PREFIX);
 			traversal(t->r, PREFIX);
 		break;
 		
 		case INFIX:
 			traversal(t->l, INFIX);
-			printf("%s\n", t->data.word);
+			print_node(t);
 			traversal(t->r, INFIX);
 		break;
 		
 		case POSTFIX:
 			traversal(t->l, POSTFIX);
 			traversal(t->r, POSTFIX);
-			printf("%s\n", t->data.word);
+			print_node(t);
 		break;
 		
 		default:
 			printf("ERR: INVALID_TRAVERSAL_TYPE\n");
 		break;
 	}
+}
+
+void print_node(tree t) {
+	printf("%s -- %d\n", t->data.word, t->data.freq);
+	printf("%s -- %s\n", t->data.sample.title, t->data.sample.artist);
+	printf("%s\n\n", t->data.sample.lyric);
 }
 
 //end;

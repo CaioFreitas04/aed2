@@ -85,7 +85,8 @@ int insert_array(word_t input, void *warray) {
 		warr->arr = realloc(warr->arr, warr->size_max * sizeof(word_t));
 	}
 	//inserção normal;
-	warr->arr[warr->size++] = input;
+	warr->arr[warr->size] = input;
+	warr->size++;
 	
 	return 0;
 }

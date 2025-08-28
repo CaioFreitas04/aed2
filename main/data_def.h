@@ -4,7 +4,7 @@
 typedef struct {
 	char title[50];
 	char artist[50];
-	char lyric[100];
+	char lyric[256];
 	int freq;
 } song;
 

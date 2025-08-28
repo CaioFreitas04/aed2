@@ -24,6 +24,7 @@ word_t *word_tsearch(char *key, tree *t);
 int freq_tsearch(char *key, tree *t);
 int tree_height(tree *t);
 void traversal(tree t, int type);
+void print_node(tree t);
 //end;
 
 //funções para árvore convencional;
