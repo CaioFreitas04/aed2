@@ -5,6 +5,7 @@ typedef struct {
 	char title[50];
 	char artist[50];
 	char lyric[100];
+	int freq;
 } song;
 
 typedef struct {
