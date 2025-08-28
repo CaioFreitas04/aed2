@@ -54,3 +54,38 @@ word_t *word_bsearch(word_t *arr, char *key, int p, int r) {
 	}
 	return NULL;
 }
+
+//defs e funções adicionadas para funcionar com parse_file;
+array *initialise_array() {
+	array *warr = calloc(1, sizeof(array));
+	warr->size = 0;
+	warr->size_max = BASE_ARRAY_SIZE;
+	warr->arr = calloc(warr->size_max, sizeof(word_t));
+	
+	return warr;
+}
+
+int insert_array(word_t input, void *warray) {
+	array *warr = (array*) warray;
+	
+	//testar se uma palavra já existe e atualizar, se necessário;
+	for (int i = 0; i < warr->size; i++) {
+        if (strcmp(warr->arr[i].word, input.word) == 0) {
+            warr->arr[i].freq += input.freq;
+
+            if (input.sample.freq > warr->arr[i].sample.freq) {
+                warr->arr[i].sample = input.sample;
+            }
+            return 0;
+        }
+    }
+	
+	if(warr->size >= warr->size_max) {
+		warr->size_max *= 2;
+		warr->arr = realloc(warr->arr, warr->size_max * sizeof(word_t));
+	}
+	//inserção normal;
+	warr->arr[warr->size++] = input;
+	
+	return 0;
+}

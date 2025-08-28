@@ -108,7 +108,15 @@ int insert_node(word_t input, tree *t) {
 		insert_node(input, &(*t)->r);
 		return 0;
 	}
-	else return 1;
+	else {	//caso de duplicata;
+		(*t)->data.freq += input.freq;
+
+		if (input.sample.freq > (*t)->data.sample.freq) {
+			(*t)->data.sample = input.sample;
+		}
+
+		return 0;
+	}
 }
 
 //end;
@@ -180,8 +188,12 @@ int insert_node_avl(word_t input, tree *t) {
     } else if(cmp > 0) {
         int r = insert_node_avl(input, &(*t)->r);
         if(r < 0) return r;
-    } else {
-        return 1;
+    } else {	//caso de duplicata;
+		(*t)->data.freq += input.freq;
+		if (input.sample.freq > (*t)->data.sample.freq) {
+			(*t)->data.sample = input.sample;
+		}
+		return 0;
     }
 
 	(*t)->factor = factor(t);
@@ -255,6 +267,17 @@ int insert_node_avl_freq(word_t input, tree *t) {
     if(*t) (*t)->factor = factor(t);
 
     return 0;
+}
+
+//funções extras necessárias para o parse_file;
+int insert_node_void(word_t input, void *t) {
+	tree *t_true = (tree*) t;
+	return insert_node(input, t_true);
+}
+
+int insert_node_avl_void(word_t input, void *avl) {
+	tree *avl_true = (tree*) avl;
+	return insert_node(input, avl_true);
 }
 
 //end;
