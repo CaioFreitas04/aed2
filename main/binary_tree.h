@@ -45,5 +45,6 @@ int insert_node_avl_freq(word_t input, tree *t);
 //funções extras necessárias para o parse_file;
 int insert_node_void(word_t input, void *t);
 int insert_node_avl_void(word_t input, void *avl);
+word_t *tree_search(char *key, void *data_structure);
 
 #endif

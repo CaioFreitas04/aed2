@@ -286,4 +286,9 @@ int insert_node_avl_void(word_t input, void *avl) {
 	return insert_node(input, avl_true);
 }
 
+word_t *tree_search(char *key, void *data_structure) {
+	tree *t = (tree*) data_structure;
+	return word_tsearch(key, t);
+}
+
 //end;

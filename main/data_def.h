@@ -14,4 +14,8 @@ typedef struct {
 	int freq;
 } word_t;
 
+typedef int (*insert_func)(word_t input, void *data_structure);
+typedef word_t *(*search_func)(char *key, void *data_structure);
+typedef void (*sort_func)(void *data_structure);
+
 #endif

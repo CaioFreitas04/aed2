@@ -90,3 +90,17 @@ int insert_array(word_t input, void *warray) {
 	
 	return 0;
 }
+
+word_t *binary_search(char *key, void *data_structure) {
+	array *warr = (array*) data_structure;
+	return word_bsearch(warr->arr, key, 0, warr->size-1);
+}
+
+void array_quicksort(void *data_structure) {
+	array *warr = (array *) data_structure;
+	word_qsort(warr->arr, 0, warr->size-1);
+}
+
+void no_sort(void *data_structure) {
+	return;
+}

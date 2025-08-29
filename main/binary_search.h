@@ -25,5 +25,8 @@ typedef struct {
 
 array *initialise_array();
 int insert_array(word_t input, void *data_structure);
+word_t *binary_search(char *key, void *data_structure);
+void array_quicksort(void *data_structure);
+void no_sort(void *data_structure);
 
 #endif
