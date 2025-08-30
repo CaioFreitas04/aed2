@@ -1,3 +1,9 @@
+/*
+ *	Caio Figueiredo Freitas 	-- 12221BCC020
+ *	Diogo Vieira Silva 			-- 12221BCC029
+ *	Patrick Gomes de Oliveira	-- 12221BCC035
+*/
+
 #ifndef BINARY_SEARCH_H
 #define BINARY_SEARCH_H
 
@@ -28,5 +34,6 @@ int insert_array(word_t input, void *data_structure);
 word_t *binary_search(char *key, void *data_structure);
 void array_quicksort(void *data_structure);
 void no_sort(void *data_structure);
+word_t *search_index(int index, array *warr);
 
 #endif

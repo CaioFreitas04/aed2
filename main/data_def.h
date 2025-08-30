@@ -1,3 +1,9 @@
+/*
+ *	Caio Figueiredo Freitas 	-- 12221BCC020
+ *	Diogo Vieira Silva 			-- 12221BCC029
+ *	Patrick Gomes de Oliveira	-- 12221BCC035
+*/
+
 #ifndef DATA_DEF_H
 #define DATA_DEF_H
 

@@ -1,3 +1,9 @@
+/*
+ *	Caio Figueiredo Freitas 	-- 12221BCC020
+ *	Diogo Vieira Silva 			-- 12221BCC029
+ *	Patrick Gomes de Oliveira	-- 12221BCC035
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

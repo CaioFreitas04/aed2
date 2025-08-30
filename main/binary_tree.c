@@ -1,3 +1,9 @@
+/*
+ *	Caio Figueiredo Freitas 	-- 12221BCC020
+ *	Diogo Vieira Silva 			-- 12221BCC029
+ *	Patrick Gomes de Oliveira	-- 12221BCC035
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -88,9 +94,18 @@ void traversal(tree t, int type) {
 }
 
 void print_node(tree t) {
-	printf("%s -- %d\n", t->data.word, t->data.freq);
-	printf("%s -- %s\n", t->data.sample.title, t->data.sample.artist);
-	printf("%s\n\n", t->data.sample.lyric);
+	printf("%-32s -- Frequencia: %d\n", t->data.word, t->data.freq);
+}
+
+void destroy_tree(tree *t) {
+	if(is_empty(t))
+		return;
+	
+	destroy_tree(&(*t)->l);
+	destroy_tree(&(*t)->l);
+	
+	free(*t);
+	*t = NULL;
 }
 
 //end;

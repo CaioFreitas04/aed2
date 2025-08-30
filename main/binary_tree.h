@@ -1,3 +1,9 @@
+/*
+ *	Caio Figueiredo Freitas 	-- 12221BCC020
+ *	Diogo Vieira Silva 			-- 12221BCC029
+ *	Patrick Gomes de Oliveira	-- 12221BCC035
+*/
+
 #ifndef BINARY_TREE_H
 #define BINARY_TREE_H
 
@@ -25,6 +31,7 @@ int freq_tsearch(char *key, tree *t);
 int tree_height(tree *t);
 void traversal(tree t, int type);
 void print_node(tree t);
+void destroy_tree(tree *t);
 //end;
 
 //funções para árvore convencional;

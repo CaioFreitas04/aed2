@@ -1,3 +1,9 @@
+/*
+ *	Caio Figueiredo Freitas 	-- 12221BCC020
+ *	Diogo Vieira Silva 			-- 12221BCC029
+ *	Patrick Gomes de Oliveira	-- 12221BCC035
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -28,23 +34,27 @@ typedef struct {
 
 
 int main() {
-	tree *bnt   = initialise_tree();
-	tree *avl   = initialise_tree();
-	array *arr  = initialise_array();
+	array *arr     = initialise_array();
+	tree *bnt      =  initialise_tree();
+	tree *avl      =  initialise_tree();
+	
+	tree *avl_freq; //essa árvore só é inicializada na hora;
 
 	ds_s zdeus[] = {
-		{ ARRAY, " Busca Binaria (array) ", arr, insert_array         , binary_search, array_quicksort, {0, 0, 0.0}},
-		{ BIN_T, "Arvore de Busca Binaria", bnt, insert_node_void     , tree_search  , no_sort        , {0, 0, 0.0}},
-		{ AVL_T, "  Arvore Binaria--AVL  ", avl, insert_node_avl_void , tree_search  , no_sort        , {0, 0, 0.0}}
+		{ ARRAY, " Busca Binaria (array) ", arr, insert_array         , binary_search, array_quicksort, {0, 0, 0.0} },
+		{ BIN_T, "Arvore de Busca Binaria", bnt, insert_node_void     , tree_search  , no_sort        , {0, 0, 0.0} },
+		{ AVL_T, "  Arvore Binaria--AVL  ", avl, insert_node_avl_void , tree_search  , no_sort        , {0, 0, 0.0} }
 	};
 	
 	while(1) {
 		int op = 0;
-		printf("\n\n%s\n%s\n%s\n%s\n\n\n",
+		printf("\n\n%s\n%s\n%s\n%s\n",
 		" _____ _____ _____ _____ _____ _____ _____ _____ _____ _____ _____ ",
 		"|  _  |  _  |   __|     | __  |     |     |  |  |   __|     |     |",
 		"|     |   __|   __|-   -|    -|  |  | | | |  |  |__   |-   -|   --|",
 		"|__|__|__|  |_____|_____|__|__|_____|_|_|_|_____|_____|_____|_____|");
+		printf("Por Caio \"Endy\" Freitas, Diogo \"Kanekko\" Vieira, Patrick Gomes.\n\n\n");
+		
 		
 		printf("\t\t1. Carregar Novo Arquivo.\n");
 		printf("\t\t2. Pesquisar Palavra.\n");
@@ -82,11 +92,69 @@ int main() {
 			break;
 			
 			case 2:
-			
+				word_t *search_out;
+				char word_in[32];
+				
+				printf("\n\nPesquise uma palavra.\n>> ");
+				
+				fgetc(stdin);
+				fgets(word_in, 32, stdin);
+				word_in[strcspn(word_in, "\n")] = 0;
+				
+				for(int i = 0; i < 3; i++) {
+					zdeus[i].time_data.begin_c = clock();
+					search_out = zdeus[i].search(word_in, zdeus[i].ds_pointer);
+					zdeus[i].time_data.end_c = clock();	
+					zdeus[i].time_data.time = ((double) zdeus[i].time_data.end_c - zdeus[i].time_data.begin_c) / CLOCKS_PER_SEC;
+					if(search_out == NULL) {
+						printf("Erro ao pesquisar. Essa palavra realmente existe?\n\n");
+						break;
+					}
+					printf("\t\t===%s============\n", zdeus[i].name);
+					printf("\t\tPesquisa concluida em: %lf segundos.\n", zdeus[i].time_data.time);
+					printf("\t\t======================================\n");
+					printf("%s\nFrequencia: %d\n\n", search_out->word, search_out->freq);
+					printf("\t\tInformacoes da musica:\nTitulo: %s\nCompositor: %s\n\n%s\n", search_out->sample.title, search_out->sample.artist, search_out->sample.lyric);
+					printf("\t\t======================================\n\n");
+				}
+				
 			break;
 			
 			case 3:
+				if(search_index(0, (array*)zdeus[ARRAY].ds_pointer) == NULL) {
+					printf("Repositorio vazio. Carregue um arquivo primeiro.\n\n");
+					break;
+				}
 			
+				avl_freq = initialise_tree();
+				int index = 0;
+				word_t *word_f_in;
+				
+				//armazenando no tempo do array só como medida temporária;
+				//e, tecnicamente, o array está sendo temporizado, não?
+				zdeus[ARRAY].time_data.begin_c = clock();
+				do {
+					
+					word_f_in = search_index(index, (array*)zdeus[ARRAY].ds_pointer);
+					if(word_f_in != NULL) {
+						insert_node_avl_freq(*word_f_in, avl_freq);
+					}
+					index++;
+					
+				} while(word_f_in != NULL);
+				zdeus[ARRAY].time_data.end_c = clock();
+				zdeus[ARRAY].time_data.time = ((double) zdeus[ARRAY].time_data.end_c - zdeus[ARRAY].time_data.begin_c) / CLOCKS_PER_SEC;
+				
+				printf("\n");
+				traversal(*avl_freq, INFIX);
+				printf("\n");
+				
+				printf("\t\t======================================\n");
+				printf("\t\tArvore construida em: %lf segundos.\n", zdeus[ARRAY].time_data.time);
+				printf("\t\t======================================\n");
+				
+				destroy_tree(avl_freq);	//gerenciamento de memória é a minha paixão;
+				
 			break;
 			
 			case 4:

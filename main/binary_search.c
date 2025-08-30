@@ -1,3 +1,9 @@
+/*
+ *	Caio Figueiredo Freitas 	-- 12221BCC020
+ *	Diogo Vieira Silva 			-- 12221BCC029
+ *	Patrick Gomes de Oliveira	-- 12221BCC035
+*/
+
 #include <stdlib.h>
 #include <string.h>
 #include "binary_search.h"
@@ -103,4 +109,11 @@ void array_quicksort(void *data_structure) {
 
 void no_sort(void *data_structure) {
 	return;
+}
+
+word_t *search_index(int index, array *warr) {
+	if(index < warr->size) {
+		return &(warr->arr[index]);
+	}
+	return NULL;
 }
